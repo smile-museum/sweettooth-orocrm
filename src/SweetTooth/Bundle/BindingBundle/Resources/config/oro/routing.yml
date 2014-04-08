@@ -1,0 +1,4 @@
+sweettooth_binding_bundle:
+    resource:     "@SweetToothBindingBundle/Controller"
+    type:         annotation
+    prefix:       /sweettooth_binding

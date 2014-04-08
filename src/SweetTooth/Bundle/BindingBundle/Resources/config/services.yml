@@ -1,0 +1,27 @@
+parameters:
+    sweettooth_binding.binding_synchronizer.class:                      SweetTooth\Bundle\BindingBundle\Sync\BindingSynchronizer
+
+    # Listeners
+    sweettooth_binding.contact.post_persist_listener.class:             SweetTooth\Bundle\BindingBundle\Entity\Listener\ContactPostPersist
+    sweettooth_binding.magento_order.post_persist_listener.class:       SweetTooth\Bundle\BindingBundle\Entity\Listener\MagentoOrderPostPersist
+
+services:
+    # Synchronizers
+    sweettooth_binding.binding_synchronizer:
+        scope: prototype
+        class: %sweettooth_binding.binding_synchronizer.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+
+    # Listeners
+    sweettooth_binding.contact.post_persist_listener:
+        class: %sweettooth_binding.contact.post_persist_listener.class%
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postUpdate }
+
+    sweettooth_binding.magento_order.post_persist_listener:
+        class: %sweettooth_binding.magento_order.post_persist_listener.class%
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postUpdate }
