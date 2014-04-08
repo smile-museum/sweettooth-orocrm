@@ -1,0 +1,127 @@
+{% extends 'OroUIBundle:actions:view.html.twig' %}
+
+{% oro_title_set({params : {"%account.name%": entity.name|default('N/A')} }) %}
+{% set audit_entity_class = 'OroCRM_Bundle_AccountBundle_Entity_Account' %}
+
+{% block navButtons %}
+    {% if resource_granted('EDIT', entity) %}
+        {{ UI.editButton({
+            'path': path('orocrm_account_update', {'id': entity.id}),
+            'entity_label': 'orocrm.account.entity_label'|trans
+        }) }}
+    {% endif %}
+    {% if resource_granted('DELETE', entity) %}
+        {{ UI.deleteButton({
+            'dataUrl': path('oro_api_delete_account', {'id': entity.id}),
+            'dataRedirect': path('orocrm_account_index'),
+            'aCss': 'no-hash remove-button',
+            'dataId': entity.id,
+            'id': 'btn-remove-account',
+            'entity_label': 'orocrm.account.entity_label'|trans
+        }) }}
+    {% endif %}
+
+    {% set html %}
+        {% placeholder orocrm_account_action_dropdown with {'entity': entity} %}
+    {% endset %}
+
+    {{ UI.dropdownButton({
+        'label': 'orocrm.account.account_actions'|trans,
+        'aCss': 'pull-right',
+        'html': html
+    }) }}
+{% endblock navButtons %}
+
+{% block pageHeader %}
+    {% set breadcrumbs = {
+        'entity': entity,
+        'indexPath': path('orocrm_account_index'),
+        'indexLabel': 'orocrm.account.entity_plural_label'|trans,
+        'entityTitle': entity.name|default('N/A')
+    } %}
+    {{ parent() }}
+{% endblock pageHeader %}
+
+{% block stats %}
+    <li>{{ 'orocrm.account.created_at.label'|trans }}: {{ entity.createdAt ? entity.createdAt|oro_format_datetime : 'N/A' }}</li>
+    <li>{{ 'orocrm.account.updated_at.label'|trans }}: {{ entity.updatedAt ? entity.updatedAt|oro_format_datetime : 'N/A' }}</li>
+{% endblock stats %}
+
+{% block content_data %}
+    {% set accountInformationWidget %}
+        {{ oro_widget_render({
+            'widgetType': 'block',
+            'title': 'orocrm.account.widgets.account_information'|trans,
+            'url': path('orocrm_account_widget_info', {id: entity.id})
+        }) }}
+    {% endset %}
+
+    {% set generalSectionBlocks = [{'data' : [accountInformationWidget]}]%}
+
+    {% if resource_granted('orocrm_contact_view') %}
+        {% set contactsInformationWidget %}
+            <div class="contact-widget-wrapper">
+                {{ oro_widget_render({
+                    'widgetType': 'block',
+                    'url': path('orocrm_account_widget_contacts', {id: entity.id}),
+                    'title': 'orocrm.contact.widgets.account_contacts'|trans
+                }) }}
+            </div>
+        {% endset %}
+
+        {% set generalSectionBlocks = generalSectionBlocks|merge(
+            [{'data': [contactsInformationWidget]}]
+        ) %}
+    {% endif %}
+
+    {% set accountSalesSection %}
+        {{ menuTabPanel('account_sales_tab_panel', {'id': entity.id}) }}
+    {% endset %}
+
+    {% set activitySection %}
+        {{ menuTabPanel('account_activity_tab_panel', {'id': entity.id}) }}
+    {% endset %}
+
+    {% set dataBlocks = [
+        {
+            'title': 'orocrm.account.sections.general'|trans,
+            'class': 'active',
+            'subblocks': generalSectionBlocks
+        },
+        {
+            'title': 'orocrm.account.sections.sales'|trans,
+            'subblocks': [
+                {'data' : [accountSalesSection]}
+            ]
+        },
+        {
+            'title': 'orocrm.account.sections.activity'|trans,
+            'subblocks': [
+                {'data' : [activitySection]}
+            ]
+        }
+    ] %}
+
+    {# Render account channels #}
+    {% for channel in channels %}
+        {%- set accountChannelInfoSection -%}
+            {% set placeHolderName = 'orocrm_account_channel_info_' ~ channel.type %}
+            {{ placeholder(placeHolderName, {'account': entity, 'channel': channel}) }}
+        {%- endset -%}
+        {% if accountChannelInfoSection %}
+            {% set dataBlocks = dataBlocks|merge([
+                {
+                    'title': channel.name,
+                    'subblocks': [
+                        {'data' : [accountChannelInfoSection]}
+                    ]
+                }
+            ]) %}
+        {% endif %}
+    {% endfor %}
+
+    {% set id = 'accountView' %}
+    {% set data = {'dataBlocks': dataBlocks} %}
+
+    {{ parent() }}
+{% endblock content_data %}

@@ -1,0 +1,129 @@
+OroCRM\Bundle\SalesBundle\Entity\Lead:
+    alias:                          oro_crm_lead
+    title_fields:                   [name]
+    route:
+        name:                       orocrm_sales_lead_view
+        parameters:
+            id:                     id
+    search_template:                OroCRMSalesBundle:Lead:searchResult.html.twig
+    fields:
+        -
+            name:                   name
+            target_type:            text
+            target_fields:          [name]
+        -
+            name:                   namePrefix
+            target_type:            text
+            target_fields:          [namePrefix]
+        -
+            name:                   firstName
+            target_type:            text
+            target_fields:          [firstName]
+        -
+            name:                   middleName
+            target_type:            text
+            target_fields:          [middleName]
+        -
+            name:                   lastName
+            target_type:            text
+            target_fields:          [lastName]
+        -
+            name:                   nameSuffix
+            target_type:            text
+            target_fields:          [nameSuffix]
+        -
+            name:                   companyName
+            target_type:            text
+            target_fields:          [companyName]
+
+OroCRM\Bundle\SalesBundle\Entity\Opportunity:
+    alias:                          oro_crm_opportunity
+    title_fields:                   [name]
+    route:
+        name:                       orocrm_sales_opportunity_view
+        parameters:
+            id:                     id
+    search_template:                OroCRMSalesBundle:Opportunity:searchResult.html.twig
+    fields:
+        -
+            name:                   name
+            target_type:            text
+            target_fields:          [name]
+        -
+            name:                   account
+            relation_type:          many-to-one
+            relation_fields:
+                -
+                    name: name
+                    target_type: text
+                    target_fields: [name]
+        -
+            name:                   contact
+            relation_type:          many-to-one
+            relation_fields:
+                -
+                    name: namePrefix
+                    target_type: text
+                    target_fields: [namePrefix]
+                -
+                    name: firstName
+                    target_type: text
+                    target_fields: [firstName]
+                -
+                    name: middleName
+                    target_type: text
+                    target_fields: [middleName]
+                -
+                    name: lastName
+                    target_type: text
+                    target_fields: [lastName]
+                -
+                    name: nameSuffix
+                    target_type: text
+                    target_fields: [nameSuffix]
+
+OroCRM\Bundle\SalesBundle\Entity\SalesFunnel:
+    alias:                          oro_crm_sales_funnel
+    title_fields:                   [lead, opportunity]
+    route:
+        name:                       orocrm_sales_salesfunnel_view
+        parameters:
+            id:                     id
+    search_template:                OroCRMSalesBundle:SalesFunnel:searchResult.html.twig
+    fields:
+        -
+            name:                   lead
+            relation_type:          many-to-one
+            relation_fields:
+                -
+                    name: name
+                    target_type: text
+                    target_fields: [name]
+                -
+                    name: namePrefix
+                    target_type: text
+                    target_fields: [namePrefix]
+                -
+                    name: firstName
+                    target_type: text
+                    target_fields: [firstName]
+                -
+                    name: middleName
+                    target_type: text
+                    target_fields: [middleName]
+                -
+                    name: lastName
+                    target_type: text
+                    target_fields: [lastName]
+                -
+                    name: nameSuffix
+                    target_type: text
+                    target_fields: [nameSuffix]
+        -
+            name:                   opportunity
+            relation_type:          many-to-one
+            relation_fields:
+                -
+                    name: name
+                    target_type: text
+                    target_fields: [name]

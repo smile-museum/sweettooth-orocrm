@@ -1,0 +1,14 @@
+OroCRM\Bundle\AccountBundle\Entity\Account:
+    alias: orocrm_account
+    label: orocrm.account.entity_plural_label
+    title_fields: [name]
+    route:
+        name: orocrm_account_view
+        parameters:
+            id: id
+    search_template: OroCRMAccountBundle:Account:searchResult.html.twig
+    fields:
+        -
+            name: name
+            target_type: text
+            target_fields: [name]

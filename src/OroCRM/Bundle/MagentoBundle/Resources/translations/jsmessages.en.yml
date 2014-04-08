@@ -1,0 +1,5 @@
+orocrm:
+    magento:
+        success: Connection successful, please select a website from the list below
+        not_valid_parameters: Parameters are not valid!
+        error: Error occurred during check request, please try later!

@@ -1,0 +1,3 @@
+css:
+  'orocrmcall':
+      - 'bundles/orocrmcall/css/call.css'

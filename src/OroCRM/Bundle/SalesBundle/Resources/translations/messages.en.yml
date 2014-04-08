@@ -1,0 +1,162 @@
+oro:
+    dashboard:
+        my_sales_flow:
+            b2b: B2B
+            b2c: B2C
+orocrm:
+    query_designer:
+        aggregates:
+            opportunity_status:
+                WonCount:
+                    name: Won Count
+                    hint: Number of 'won' items
+                LostCount:
+                    name: Lost Count
+                    hint: Number of 'lost' items
+                InProgressCount:
+                    name: In Progress Count
+                    hint: Number of 'in progress' items
+
+    sales:
+        controller:
+            lead.saved.message: "Lead saved"
+            opportunity.saved.message: "Opportunity saved"
+            sales_funnel.saved.message: "Sales process saved"
+
+        form:
+            choose_opportunity: 'Choose an opportunity....'
+            choose_lead: 'Choose a lead....'
+
+        #
+        # OroCRM/Bundle/SalesBundle/Entity/LeadStatus.php
+        #
+        leadstatus:
+            entity_label:         Lead Status
+            entity_plural_label:  Lead Statuses
+            entity_description:   Represent lead status
+            name.label:           Name
+            label.label:          Label
+        #
+        # OroCRM/Bundle/SalesBundle/Entity/OpportunityStatus.php
+        #
+        opportunitystatus:
+            entity_label:         Opportunity Status
+            entity_plural_label:  Opportunity Statuses
+            entity_description:   Represent opportunity status
+            name.label:           Name
+            label.label:          Label
+        #
+        # OroCRM/Bundle/SalesBundle/Entity/Opportunity.php
+        #
+        opportunity:
+            entity_label:         Opportunity
+            entity_plural_label:  Opportunities
+            entity_description:   Represent opportunity
+            add_entity:           Add opportunity
+            id.label:             Id
+            name.label:           Opportunity name
+            close_date.label:     Close date
+            probability.label:    Probability
+            budget_amount.label:  Budget amount
+            close_revenue.label:  Close revenue
+            customer_need.label:  Customer need
+            proposed_solution.label: Proposed solution
+            created_at.label:     Created
+            updated_at.label:     Updated
+            status.label:         Status
+            close_reason.label:   Close reason
+            contact.label:        Potential Customer
+            account.label:        Account
+            owner.label:          Owner
+            notes.label:          Notes
+            lead.label:           Lead
+            workflow_item.label:  Workflow Item
+            workflow_step.label:  Step
+
+            datagrid:
+                view: View
+                update: Update
+                delete: Delete
+
+        #
+        # OroCRM/Bundle/SalesBundle/Entity/OpportunityCloseReason.php
+        #
+        opportunityclosereason:
+            entity_label:         Opportunity Close Reason
+            entity_plural_label:  Opportunity Close Reasons
+            entity_description:   Represent opportunity close reason
+            name.label:           Name
+            label.label:          Label
+        #
+        # OroCRM/Bundle/SalesBundle/Entity/Lead.php
+        #
+        lead:
+            entity_label:         Lead
+            entity_plural_label:  Leads
+            entity_description:   Represent lead
+            add_entity:           Add lead
+            id.label:             Id
+            name.label:           Lead name
+            name_prefix.label:    Name prefix
+            first_name.label:     First name
+            middle_name.label:    Middle name
+            last_name.label:      Last name
+            name_suffix.label:    Name suffix
+            job_title.label:      Job title
+            phone_number.label:   Phone number
+            email.label:          Email
+            company_name.label:   Company name
+            website.label:        Website
+            number_of_employees.label: Number of employees
+            industry.label:       Industry
+            created_at.label:     Created At
+            updated_at.label:     Updated
+            status.label:         Status
+            contact.label:        Contact
+            account.label:        Account
+            owner.label:          Owner
+            address.label:        Address
+            details.label:        Lead Details
+            extend_source.label:  Source
+            notes.label:          Notes
+            opportunities.label:  Opportunities
+            workflow_item.label:  Workflow Item
+            workflow_step.label:  Step
+            information:          Lead Information
+
+            extend_source:
+                unclassified:     Unclassified
+                others:           Others
+                none:             None
+
+            datagrid:
+                country: Country
+                region: State
+                postal_code: Postal Code
+                view: View
+                update: Update
+                delete: Delete
+
+        salesfunnel:
+            entity_label:         Sales Process
+            entity_plural_label:  Sales Processes
+            new_entity:           New Sales Process
+            id.label:             'Sales #'
+            created_at.label:     Created
+            updated_at.label:     Updated
+            start_date.label:     Start Date
+            lead.label:           Lead
+            opportunity.label:    Opportunity
+            owner.label:          Owner
+            workflow_item.label:  Workflow Item
+            workflow_step.label:  Step
+
+            hint: 'Sales Process #%id%'
+
+            datagrid:
+                view:   View
+                update: Update
+                delete: Delete
+        widgets:
+            leads:         Leads
+            opportunities: Opportunities

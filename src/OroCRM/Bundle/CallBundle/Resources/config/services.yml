@@ -1,0 +1,15 @@
+parameters:
+    orocrm_call.call.entity.class:                  OroCRM\Bundle\CallBundle\Entity\Call
+    orocrm_call.event_listener.datagrid.call.class: OroCRM\Bundle\CallBundle\EventListener\Datagrid\CallListener
+
+services:
+    orocrm_call.event_listener.datagrid.call:
+        class: %orocrm_call.event_listener.datagrid.call.class%
+        arguments:
+          - @doctrine.orm.entity_manager
+        tags:
+            - { name: kernel.event_listener, event: oro_datagrid.datagrid.build.before.widget-calls-grid, method: onBuildBefore }
+            - { name: kernel.event_listener, event: oro_datagrid.datagrid.build.after.widget-calls-grid, method: onBuildAfter }
+
+
+

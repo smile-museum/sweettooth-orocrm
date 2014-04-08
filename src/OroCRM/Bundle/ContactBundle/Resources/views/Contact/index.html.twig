@@ -1,0 +1,34 @@
+{% extends 'OroUIBundle:actions:index.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% set gridName = 'contacts-grid' %}
+{% set pageTitle = 'orocrm.contact.entity_plural_label'|trans %}
+
+{% block navButtons %}
+    {% if resource_granted('oro_importexport_import') %}
+        <div class="btn-group">
+            <a type="button"
+               class="btn no-hash"
+               target="_blank"
+               href="{{ asset('bundles/orocrmcontact/import/contacts_sample.csv') }}">
+                {{ 'Import Data Template'|trans }}
+            </a>
+        </div>
+    {% endif %}
+
+    {% include 'OroImportExportBundle:ImportExport:buttons.html.twig' with {
+        entityClass: 'OroCRM\\Bundle\\ContactBundle\\Entity\\Contact',
+        importProcessor: 'orocrm_contact.import_validation',
+        exportProcessor: 'orocrm_contact',
+        imortTitle: 'orocrm.contact.import'|trans,
+        dataGridName: gridName
+    } %}
+
+    {% if resource_granted('orocrm_contact_create') %}
+    <div class="btn-group">
+        {{ UI.addButton({
+            'path' : path('orocrm_contact_create'),
+            'entity_label': 'orocrm.contact.entity_label'|trans,
+        }) }}
+    </div>
+    {% endif %}
+{% endblock %}

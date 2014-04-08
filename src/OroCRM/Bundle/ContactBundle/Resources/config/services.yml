@@ -1,0 +1,214 @@
+parameters:
+    orocrm_contact.entity.class:                    OroCRM\Bundle\ContactBundle\Entity\Contact
+    orocrm_contact.type.contact.class:              OroCRM\Bundle\ContactBundle\Form\Type\ContactType
+    orocrm_contact.type.group.class:                OroCRM\Bundle\ContactBundle\Form\Type\GroupType
+    orocrm_contact.handler.contact.class:           OroCRM\Bundle\ContactBundle\Form\Handler\ContactHandler
+    orocrm_contact.form.type.contact_select.class:  OroCRM\Bundle\ContactBundle\Form\Type\ContactSelectType
+    orocrm_contact.handler.group.class:             OroCRM\Bundle\ContactBundle\Form\Handler\GroupHandler
+
+    orocrm_contact.contact.manager.api.class:         Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+    orocrm_contact.contact_address.manager.api.class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+    orocrm_contact.form.type.contact.api.class:       OroCRM\Bundle\ContactBundle\Form\Type\ContactApiType
+
+    orocrm_contact.group.entity.class:              OroCRM\Bundle\ContactBundle\Entity\Group
+    orocrm_contact.group.manager.api.class:         Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+    orocrm_contact.form.type.group.api.class:       OroCRM\Bundle\ContactBundle\Form\Type\GroupApiType
+
+    orocrm_contact.contact_address.entity.class:        OroCRM\Bundle\ContactBundle\Entity\ContactAddress
+    orocrm_contact.subscriber.contact_subscriber.class: OroCRM\Bundle\ContactBundle\EventListener\ContactSubscriber
+
+    orocrm_contact.email.owner.provider.class: OroCRM\Bundle\ContactBundle\Entity\Provider\EmailOwnerProvider
+
+    orocrm_contact.social_url_formatter.class: OroCRM\Bundle\ContactBundle\Formatter\SocialUrlFormatter
+    orocrm_contact.event_listener.contact_email_grid_listener.class: OroCRM\Bundle\ContactBundle\EventListener\ContactEmailGridListener
+
+    orocrm_contact.contact.datagrid_helper.class: Oro\Bundle\AddressBundle\Datagrid\CountryDatagridHelper
+
+services:
+    orocrm_contact.form.contact:
+        class: Symfony\Component\Form\Form
+        factory_method: createNamed
+        factory_service: form.factory
+        arguments: ["orocrm_contact_form", "orocrm_contact", null]
+
+    orocrm_contact.form.group:
+        class: Symfony\Component\Form\Form
+        factory_method: createNamed
+        factory_service: form.factory
+        arguments: ["orocrm_contact_group_form", "orocrm_contact_group"]
+
+    orocrm_contact.form.type.contact:
+        class: %orocrm_contact.type.contact.class%
+        arguments:
+            - %orocrm_contact.entity.class%
+            - %orocrm_contact.contact_address.entity.class%
+        tags:
+            - { name: form.type, alias: orocrm_contact }
+
+    orocrm_contact.form.handler.contact:
+        class: %orocrm_contact.handler.contact.class%
+        scope: request
+        arguments:
+            - @orocrm_contact.form.contact
+            - @request
+            - @doctrine.orm.entity_manager
+        tags:
+            - { name: oro_tag.tag_manager }
+
+    orocrm_contact.contact.manager:
+        class: %orocrm_contact.contact.manager.api.class%
+        arguments:
+            - %orocrm_contact.entity.class%
+            - @doctrine.orm.entity_manager
+
+    # Form type
+    orocrm_contact.form.type.contact_select:
+        class: %orocrm_contact.form.type.contact_select.class%
+        tags:
+            - { name: form.type, alias: orocrm_contact_select }
+
+    orocrm_contact.form.handler.group:
+        class: %orocrm_contact.handler.group.class%
+        scope: request
+        arguments:
+            - @orocrm_contact.form.group
+            - @request
+            - @doctrine.orm.entity_manager
+
+    orocrm_contact.form.type.group:
+        class: %orocrm_contact.type.group.class%
+        tags:
+            - { name: form.type, alias: orocrm_contact_group }
+
+    # Contact API
+    orocrm_contact.contact.manager.api:
+        class: %orocrm_contact.contact.manager.api.class%
+        arguments:
+            - %orocrm_contact.entity.class%
+            - @doctrine.orm.entity_manager
+
+    orocrm_contact.contact_address.manager.api:
+        class: %orocrm_contact.contact_address.manager.api.class%
+        arguments:
+            - %orocrm_contact.contact_address.entity.class%
+            - @doctrine.orm.entity_manager
+
+    orocrm_contact.form.type.contact.api:
+        class: %orocrm_contact.form.type.contact.api.class%
+        arguments:
+            - %orocrm_contact.entity.class%
+            - %orocrm_contact.contact_address.entity.class%
+        tags:
+            - { name: form.type, alias: contact }
+
+    orocrm_contact.form.contact.api:
+        class: Symfony\Component\Form\Form
+        factory_method: createNamed
+        factory_service: form.factory
+        arguments: ["contact", "contact", null]
+
+    orocrm_contact.form.handler.contact.api:
+        class: %orocrm_contact.handler.contact.class%
+        scope: request
+        arguments:
+            - @orocrm_contact.form.contact.api
+            - @request
+            - @doctrine.orm.entity_manager
+        tags:
+            - { name: oro_tag.tag_manager }
+
+    # Group API
+    orocrm_contact.group.manager.api:
+        class: %orocrm_contact.group.manager.api.class%
+        arguments:
+            - %orocrm_contact.group.entity.class%
+            - @doctrine.orm.entity_manager
+
+    orocrm_contact.form.type.group.api:
+        class: %orocrm_contact.form.type.group.api.class%
+        tags:
+            - { name: form.type, alias: contact_group }
+
+    orocrm_contact.form.group.api:
+        class: Symfony\Component\Form\Form
+        factory_method: createNamed
+        factory_service: form.factory
+        arguments: ["contact_group", "contact_group", null]
+
+    orocrm_contact.form.handler.group.api:
+        class: %orocrm_contact.handler.group.class%
+        scope: request
+        arguments:
+            - @orocrm_contact.form.group.api
+            - @request
+            - @doctrine.orm.entity_manager
+
+    orocrm_contact.contact_address.form:
+        class: Symfony\Component\Form\Form
+        factory_method: createNamed
+        factory_service: form.factory
+        arguments:
+            - "orocrm_contact_address_form"
+            - "oro_typed_address"
+            - ~
+
+    orocrm_contact.form.handler.contact_address:
+        class: %oro_address.form.handler.address.class%
+        scope: request
+        arguments:
+            - @orocrm_contact.contact_address.form
+            - @request
+            - @doctrine.orm.entity_manager
+
+    orocrm_contact.form.autocomplete.contact.search_handler:
+        parent: oro_form.autocomplete.full_name.search_handler
+        arguments:
+            - %orocrm_contact.entity.class%
+            - ["namePrefix", "firstName", "middleName", "lastName", "nameSuffix"]
+        tags:
+            - { name: oro_form.autocomplete.search_handler, alias: contacts, acl_resource: orocrm_contact_view }
+
+    orocrm_contact.email.owner.provider:
+        class: %orocrm_contact.email.owner.provider.class%
+        tags:
+            - { name: oro_email.owner.provider, order: 2 }
+
+    orocrm_contact.subscriber.contact_subscriber:
+        class: %orocrm_contact.subscriber.contact_subscriber.class%
+        arguments:
+            - @service_container
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    orocrm_contact.social_url_formatter:
+        class: %orocrm_contact.social_url_formatter.class%
+        arguments:
+            - %oro_contact.social_url_format%
+
+    orocrm_contact.event_listener.contact_email_grid_listener:
+        class: %orocrm_contact.event_listener.contact_email_grid_listener.class%
+        arguments:
+          - @oro_datagrid.datagrid.request_params
+          - @doctrine.orm.entity_manager
+          - @oro_email.datagrid_query_factory
+        tags:
+          - { name: kernel.event_listener, event: oro_datagrid.datagrid.build.after.contacts-email-grid, method: onBuildAfter }
+
+    orocrm_contact.event_listener.contactgroup_contacts_grid_listener:
+        class: %oro_datagrid.event_listener.base_orm_relation.class%
+        arguments:
+          - 'group'
+          - @oro_datagrid.datagrid.request_params
+        tags:
+            - { name: kernel.event_listener, event: oro_datagrid.datagrid.build.after.contact-group-contacts-grid, method: onBuildAfter }
+
+    orocrm_contact.event_listener.contact_accounts_grid_listener:
+        class: %oro_datagrid.event_listener.base_orm_relation.class%
+        arguments:
+          - 'contact'
+          - @oro_datagrid.datagrid.request_params
+        tags:
+            - { name: kernel.event_listener, event: oro_datagrid.datagrid.build.after.contact-accounts-grid, method: onBuildAfter }
+
+    orocrm_contact.contact.datagrid_helper:
+        class: %orocrm_contact.contact.datagrid_helper.class%

@@ -1,0 +1,39 @@
+OroCRM\Bundle\SalesBundle\Entity\Opportunity:
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                max: 255
+        probability:
+            - Range:
+                min: 0
+                max: 100
+        budgetAmount:
+            - Range:
+                min: 0
+        closeRevenue:
+            - Range:
+                min: 0
+        account:
+            - NotBlank: ~
+
+OroCRM\Bundle\SalesBundle\Entity\Lead:
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                max: 255
+        firstName:
+            - NotBlank: ~
+            - Length:
+                max: 255
+        lastName:
+            - NotBlank: ~
+            - Length:
+                max: 255
+
+OroCRM\Bundle\SalesBundle\Entity\SalesFunnel:
+    properties:
+        startDate:
+            - NotBlank: ~
+            - Date: ~

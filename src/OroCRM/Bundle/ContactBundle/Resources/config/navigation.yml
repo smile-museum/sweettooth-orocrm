@@ -1,0 +1,65 @@
+oro_menu_config:
+    items:
+        customers_tab:
+            label: 'Customers'
+            uri: '#'
+            extras:
+                position: 10
+
+        contact_list:
+            label: orocrm.contact.entity_plural_label
+            route: orocrm_contact_index
+            extras:
+                position: 10
+                routes: ['/^orocrm_contact_(?!group\w+|group\w+)\w+$/']
+                description: List of contacts
+        contact_group_list:
+            label: orocrm.contact.group.entity_plural_label
+            route: orocrm_contact_group_index
+            extras:
+                position:    30
+                routes:      ['orocrm_contact_group_*']
+                description: List of contact groups
+
+        shortcut_new_contact:
+            label: Create new contact
+            route: orocrm_contact_create
+            extras:
+                description: Create new contact instance
+                isCustomAction: true
+        shortcut_list_contacts:
+            label: Show contacts list
+            route: orocrm_contact_index
+            extras:
+                description: List of contacts
+        shortcut_new_contact_group:
+            label: Create new contact group
+            route: orocrm_contact_group_create
+            extras:
+                description: Create new contact group instance
+
+    tree:
+        application_menu:
+            children:
+                customers_tab:
+                    children:
+                        contact_list: ~
+                system_tab:
+                    children:
+                        contact_group_list: ~
+
+        shortcuts:
+            children:
+                shortcut_new_contact: ~
+                shortcut_list_contacts: ~
+                shortcut_new_contact_group: ~
+
+oro_titles:
+    orocrm_contact_index: ~
+    orocrm_contact_view: %%contact.name%%
+    orocrm_contact_create: Create Contact
+    orocrm_contact_update: %%contact.name%% - Edit
+
+    orocrm_contact_group_index: ~
+    orocrm_contact_group_create: Create Contact Group
+    orocrm_contact_group_update: %%group.label%% - Edit
