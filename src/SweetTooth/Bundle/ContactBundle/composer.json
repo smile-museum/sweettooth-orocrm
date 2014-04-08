@@ -1,19 +1,18 @@
 {
-    "name": "sweettooth/sweettooth-orocrm-binding-bundle",
+    "name": "sweettooth/sweettooth-orocrm-contact-bundle",
     "type": "symfony-bundle",
-    "description": "Sweet Tooth Bindings Bundle for OroCRM",
+    "description": "Sweet Tooth Contact Bundle for OroCRM",
     "keywords": ["Sweet Tooth"],
     "license": "MIT",
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.1.*",
         "orocrm/contact-bundle": "dev-master",
-        "orocrm/magento-bundle": "dev-master"
     },
     "autoload": {
         "psr-0": { "": "src/" }
     },
-    "target-dir": "SweetTooth/Bundle/BindingBundle",
+    "target-dir": "SweetTooth/Bundle/ContactBundle",
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {

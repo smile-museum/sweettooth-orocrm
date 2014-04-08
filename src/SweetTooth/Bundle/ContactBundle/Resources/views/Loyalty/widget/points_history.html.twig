@@ -1,0 +1,11 @@
+{% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
+
+<div class="widget-content">
+    {{ dataGrid.renderGrid('widget-points-history-grid', datagridParameters) }}
+</div>
+
+<script type="text/javascript">
+    require(['orocrm/call/info-opener']);
+</script>
+
+

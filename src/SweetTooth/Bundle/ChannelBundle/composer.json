@@ -1,7 +1,7 @@
 {
-    "name": "sweettooth/sweettooth-orocrm-binding-bundle",
+    "name": "sweettooth/sweettooth-orocrm-channel-bundle",
     "type": "symfony-bundle",
-    "description": "Sweet Tooth Bindings Bundle for OroCRM",
+    "description": "Sweet Tooth Channel Bundle for OroCRM",
     "keywords": ["Sweet Tooth"],
     "license": "MIT",
     "require": {
@@ -13,7 +13,7 @@
     "autoload": {
         "psr-0": { "": "src/" }
     },
-    "target-dir": "SweetTooth/Bundle/BindingBundle",
+    "target-dir": "SweetTooth/Bundle/ChannelBundle",
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {

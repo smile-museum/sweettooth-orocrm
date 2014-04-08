@@ -1,0 +1,19 @@
+parameters:
+    sweettooth_contact.datasource.points_history.class:                 SweetTooth\Bundle\ContactBundle\Extension\PointsHistoryDatasource
+    sweettooth_contact.event_listener.datagrid.points_history.class:    SweetTooth\Bundle\ContactBundle\EventListener\Datagrid\PointsHistoryListener
+
+services:
+    sweettooth_contact.datasource.points_history:
+        class: %sweettooth_contact.datasource.points_history.class%
+        arguments:
+          - @doctrine.orm.entity_manager
+        tags:
+            - { name: oro_datagrid.datasource, type: points_history }
+
+    sweettooth_contact.event_listener.datagrid.points_history:
+        class: %sweettooth_contact.event_listener.datagrid.points_history.class%
+        arguments:
+          - @doctrine.orm.entity_manager
+        tags:
+            - { name: kernel.event_listener, event: oro_datagrid.datgrid.build.before.widget-points-history-grid, method: onBuildBefore }
+            - { name: kernel.event_listener, event: oro_datagrid.datgrid.build.after.widget-points-history-grid, method: onBuildAfter }

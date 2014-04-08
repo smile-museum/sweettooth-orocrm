@@ -1,0 +1,3 @@
+sweet_tooth_contact_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: SweetToothContactBundle:Default:index }

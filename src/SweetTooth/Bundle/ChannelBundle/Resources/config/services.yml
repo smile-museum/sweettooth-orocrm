@@ -1,0 +1,39 @@
+parameters:
+    # transport
+    sweettooth_channel.transport.rest_transport.class:                        SweetTooth\Bundle\ChannelBundle\Provider\Transport\RestTransport
+
+    # providers
+    sweettooth_channel.provider.channel_type.class:                           SweetTooth\Bundle\ChannelBundle\Provider\ChannelType
+
+    # forms
+    sweettooth_channel.form.type.soap_transport_setting.class:                SweetTooth\Bundle\ChannelBundle\Form\Type\SoapTransportSettingFormType
+    sweettooth_channel.form.subscriber.soap_transport_setting.class:          SweetTooth\Bundle\ChannelBundle\Form\EventListener\SoapSettingsFormSubscriber
+
+services:
+    sweettooth_channel.transport.rest_transport:
+        class: %sweettooth_channel.transport.rest_transport.class%
+        arguments:
+            - @oro_security.encoder.mcrypt
+        tags:
+            - { name: oro_integration.transport, type: sweettooth_rest, channel_type: sweettooth }
+
+    # Providers
+    sweettooth_channel.provider.channel_type:
+        class: %sweettooth_channel.provider.channel_type.class%
+        tags:
+            - { name: oro_integration.channel, type: sweettooth }
+
+    # forms
+    sweettooth_channel.form.subscriber.soap_transport_setting:
+        class: %sweettooth_channel.form.subscriber.soap_transport_setting.class%
+        arguments:
+            - @oro_security.encoder.mcrypt
+
+    sweettooth_channel.form.type.soap_transport_setting:
+        class: %sweettooth_channel.form.type.soap_transport_setting.class%
+        arguments:
+            - @sweettooth_channel.transport.rest_transport
+            - @sweettooth_channel.form.subscriber.soap_transport_setting
+            - @oro_integration.manager.types_registry
+        tags:
+            - { name: form.type, alias: sweet_tooth_channel_soap_transport_setting_form_type }
