@@ -7,3 +7,6 @@ composer.lock
 /vendor
 phpunit.xml
 *~
+
+# Mac stuff
+.DS_Store
