@@ -1,35 +1,26 @@
-OroCRM
+Sweet Tooth for OroCRM
 ========================
 
-Welcome to OroCRM an Open Source Client Relationship Management (CRM) tool.
+Welcome to Sweet Tooth customer loyalty for OroCRM.
 
 This document contains information on how to download, install, and start
-using OroCRM. For a more detailed explanation, see the [Installation]
+using Sweet Tooth. For a more detailed explanation, see the [Installation]
 chapter.
 
 Requirements
 ------------
 
-OroCRM requires Symfony 2.4, Doctrine 2 and PHP 5.4.4 or above.
+Sweet Tooth requires Symfony 2.4, Doctrine 2 and PHP 5.4.4 or above.
 
 Installation
 ------------
 
 ```bash
-git clone https://github.com/orocrm/crm.git
+git clone https://github.com/sweettooth/sweettooth-orocrm.git
 
 curl -s https://getcomposer.org/installer | php
 
 php composer.phar install
-```
-
-Run unit tests
---------------
-
-To run unit tests of any bundles :
-
-```bash
-phpunit
 ```
 
 Use as dependency in composer
@@ -37,6 +28,6 @@ Use as dependency in composer
 
 ```yaml
     "require": {
-        "oro/crm": "1.0.*",
+        "sweettooth/sweettooth-orocrm": "1.0.*",
     }
 ```
