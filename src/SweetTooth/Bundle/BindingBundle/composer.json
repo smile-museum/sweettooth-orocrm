@@ -1,24 +1,18 @@
 {
-    "name": "sweettooth/binding-bundle",
+    "name": "sweettooth/sweettooth-orocrm-binding-bundle",
     "type": "symfony-bundle",
-    "description": "Sweet Tooth Binding Bundle",
-    "keywords": ["Loyalty", "Points", "Rewards"],
+    "description": "Oro CRM Sweet Tooth Bindings",
+    "keywords": ["Sweet Tooth", "Bindings"],
+    "homepage": "https://github.com/sweettooth/SweetToothOrocrmBindingBundle",
     "license": "MIT",
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.3.*",
-        "doctrine/orm": ">=2.3,<2.4-dev",
-
-        "oro/ui-bundle": "dev-master",
-        "oro/business-entities-bundle": "dev-master",
+        "symfony/symfony": "2.1.*",
         "orocrm/contact-bundle": "dev-master",
-        "orocrm/account-bundle": "dev-master",
-        "orocrm/integration-bundle": "dev-master"
+        "orocrm/magento-bundle": "dev-master"
     },
     "autoload": {
-        "psr-0": {
-            "": "src/"
-        }
+        "psr-0": { "": "src/" }
     },
     "target-dir": "SweetTooth/Bundle/BindingBundle",
     "minimum-stability": "dev",
