@@ -1,0 +1,24 @@
+placeholders:
+    view_content_data_additional_information:
+        items:
+            # orocrm_call_user_calls: ~
+            # orocrm_call_contact_calls: ~
+            sweettooth_contact_points_balance: ~
+            sweettooth_contact_points_history: ~
+
+items:
+    # orocrm_call_user_calls:
+    #     template: OroCRMCallBundle:Call:userCalls.html.twig
+    #     attribute_instance_of: [entity, %oro_user.entity.class%]
+
+    # orocrm_call_contact_calls:
+    #     template: OroCRMCallBundle:Call:contactCalls.html.twig
+    #     attribute_instance_of: [entity, %orocrm_contact.entity.class%]
+
+    sweettooth_contact_points_balance:
+        template: SweetToothContactBundle:Loyalty:contactPointsBalance.html.twig
+        attribute_instance_of: [entity, %orocrm_contact.entity.class%]
+
+    sweettooth_contact_points_history:
+        template: SweetToothContactBundle:Loyalty:contactPointsHistory.html.twig
+        attribute_instance_of: [entity, %orocrm_contact.entity.class%]
