@@ -1,2 +1,0 @@
-bundles:
-    - { name: SweetTooth\Bundle\ContactOverrideBundle\SweetToothContactOverrideBundle, priority: 30 }
