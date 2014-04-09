@@ -1,4 +1,0 @@
-sweet_tooth_channel_bundle:
-    resource:     "@SweetToothChannelBundle/Controller"
-    type:         annotation
-    prefix:       /sweettooth_channel
