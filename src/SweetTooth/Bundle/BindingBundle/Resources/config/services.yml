@@ -12,6 +12,8 @@ services:
         class: %sweettooth_binding.binding_synchronizer.class%
         arguments:
             - @doctrine.orm.entity_manager
+        calls:
+            - [ setContainer, [ @service_container ] ]
 
     # Listeners
     sweettooth_binding.contact.post_persist_listener:
@@ -25,3 +27,15 @@ services:
         tags:
             - { name: doctrine.event_listener, event: postPersist }
             - { name: doctrine.event_listener, event: postUpdate }
+
+    sweettooth_binding.contact_broker:
+        class: SweetTooth\Bundle\BindingBundle\Broker\ContactBroker
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @service_container
+
+    sweettooth_binding.magento_order_broker:
+        class: SweetTooth\Bundle\BindingBundle\Broker\MagentoOrderBroker
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @service_container

@@ -50,14 +50,12 @@ class MagentoOrderBroker extends BrokerAbstract
 
         $localContactId = $localObject->getCustomer()->getContact()->getId();
 
-        // // TODO: Could optimize here with a call that will only load the customer binding if it already has a remote customer id saved
-        // // Right now it's making a fetch to ST to load the remote customer id (extra network call)
-        $contactBroker = new ContactBroker($this->em);
+        // TODO: Could optimize here with a call that will only load the customer binding if it already has a remote customer id saved
+        // Right now it's making a fetch to ST to load the remote customer id (extra network call)
+        $contactBroker = $this->container->get('sweettooth_binding.contact_broker');
         $customerBinding = $contactBroker->retrieve($localContactId);
 
-        // $customerBinding = Mage::getSingleton('stcore/customer_broker')->retrieve($localCustomerId);
-
-        // // Propagate the exception if there was a failure loading the remote customer
+        // Propagate the exception if there was a failure loading the remote customer
         if (!$customerBinding->getRemoteId()) {
             throw new Exception("Failed to load remote Sweet Tooth Customer. Details: " . $customerBinding->getErrorMessage());
             // throw new SweetTooth_Error("Failed to load remote Sweet Tooth Customer. Details: " . $customerBinding->getErrorMessage());

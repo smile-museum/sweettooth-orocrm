@@ -6,8 +6,10 @@ use SweetTooth;
 
 use SweetTooth\Bundle\BindingBundle\Entity\ContactBinding;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\Container;
 
-abstract class BrokerAbstract
+abstract class BrokerAbstract extends ContainerAware
 {
     /**
      * Abstract. Set this in the child class to specify the binding model
@@ -24,8 +26,16 @@ abstract class BrokerAbstract
     abstract protected function _updateRemoteObject($remoteId, $localId, $localObject = null);
     abstract protected function _deleteRemoteObject($remoteId);
 
-
+    /**
+     * Entity Manager
+     */
     protected $em;
+
+    /**
+     * Sweet Tooth API Key
+     * @var string
+     */
+    protected $apiKey;
 
     /**
      * Constructor
@@ -33,13 +43,24 @@ abstract class BrokerAbstract
      * @param EntityManager $em
      */
     public function __construct(
-        EntityManager $em
+        EntityManager $em,
+        Container $container
     ) {
         $this->em = $em;
-        // $apiKey = $this->container->get('oro_config.global')->get('sweet_tooth_binding.api_key');
-        // SweetTooth::setApiKey($apiKey);
-        SweetTooth::setApiKey('sk_DrRXkNMNnLW1Z4VhGstfw8V4');
-        // Mage::helper('stcore')->initSweetToothLib();
+        $this->setContainer($container);
+        $this->apiKey = $this->container->get('oro_config.global')->get('sweet_tooth_binding.api_key');
+
+        SweetTooth::setApiKey($this->apiKey);
+    }
+
+    public function getClassHierarchy($object) {
+        if (!is_object($object)) return false;
+        $hierarchy = array();
+        $class = get_class($object);
+        do {
+            $hierarchy[] = $class;
+        } while (($class = get_parent_class($class)) !== false);
+        return implode(', ', $hierarchy);
     }
 
     /**
