@@ -18,6 +18,10 @@
         {
             "type": "composer",
             "url": "http://packagist.orocrm.com"
+        },
+        {
+            "type": "composer",
+            "url": "https://packagist.org"
         }
     ],
     "require": {
