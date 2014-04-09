@@ -33,5 +33,9 @@ services:
         arguments:
             - @doctrine.orm.entity_manager
             - @service_container
-        # calls:
-            # - [ setContainer, [ @service_container ] ]
+
+    sweettooth_binding.magento_order_broker:
+        class: SweetTooth\Bundle\BindingBundle\Broker\MagentoOrderBroker
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @service_container

@@ -40,7 +40,7 @@ class BindingSynchronizer extends ContainerAware
         // error_log("Id " . $localObject->getId());
 
         $this->syncContacts();
-        // $this->syncMagentoOrders();
+        $this->syncMagentoOrders();
     }
 
     protected function syncContacts()
@@ -51,11 +51,7 @@ class BindingSynchronizer extends ContainerAware
 
         foreach ($bindings as $binding) {
             $broker = $this->container->get('sweettooth_binding.contact_broker');
-            // $broker = new ContactBroker($this->em);
-             
-            // $broker->test();
             $broker->doUpdate($binding->getLocalId());
-            // error_log('Done sync: ' . $binding->getLocalId());
         }
     }
 
@@ -66,13 +62,8 @@ class BindingSynchronizer extends ContainerAware
         );
 
         foreach ($bindings as $binding) {
-            $broker = new MagentoOrderBroker($this->em);
-
-            // $broker->test(1);
-            // return;
-
+            $broker = $this->container->get('sweettooth_binding.magento_order_broker');
             $broker->doUpdate($binding->getLocalId());
-            error_log('Synced order binding ' . $binding->getLocalId());
         }
     }
 }

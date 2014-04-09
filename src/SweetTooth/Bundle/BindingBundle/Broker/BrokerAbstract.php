@@ -26,8 +26,16 @@ abstract class BrokerAbstract extends ContainerAware
     abstract protected function _updateRemoteObject($remoteId, $localId, $localObject = null);
     abstract protected function _deleteRemoteObject($remoteId);
 
-
+    /**
+     * Entity Manager
+     */
     protected $em;
+
+    /**
+     * Sweet Tooth API Key
+     * @var string
+     */
+    protected $apiKey;
 
     /**
      * Constructor
@@ -40,14 +48,9 @@ abstract class BrokerAbstract extends ContainerAware
     ) {
         $this->em = $em;
         $this->setContainer($container);
+        $this->apiKey = $this->container->get('oro_config.global')->get('sweet_tooth_binding.api_key');
 
-        $apiKey = $this->container->get('oro_config.global')->get('sweet_tooth_binding.api_key');
-
-        error_log("API KEY " . $apiKey);
-
-        SweetTooth::setApiKey($apiKey);
-        // SweetTooth::setApiKey('sk_DrRXkNMNnLW1Z4VhGstfw8V4');
-        // Mage::helper('stcore')->initSweetToothLib();
+        SweetTooth::setApiKey($this->apiKey);
     }
 
     public function getClassHierarchy($object) {
