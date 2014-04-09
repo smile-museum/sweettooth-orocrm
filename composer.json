@@ -23,7 +23,8 @@
     "require": {
         "php": ">=5.4.4",
         "oro/platform": "1.0.*",
-        "oro/crm": "1.0.*"
+        "oro/crm": "1.0.*",
+        "sweettooth/sweettooth-php": "dev-master"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
