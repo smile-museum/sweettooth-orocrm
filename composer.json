@@ -15,15 +15,20 @@
          }
     },
     "repositories": [
-       {
+        {
             "type": "composer",
             "url": "http://packagist.orocrm.com"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/sweettooth/sweettooth-php"
         }
     ],
     "require": {
         "php": ">=5.4.4",
         "oro/platform": "1.0.*",
-        "oro/crm": "1.0.*"
+        "oro/crm": "1.0.*",
+        "sweettooth/sweettooth-php": "master"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

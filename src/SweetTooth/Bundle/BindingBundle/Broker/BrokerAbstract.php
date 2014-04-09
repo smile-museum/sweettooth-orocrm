@@ -36,6 +36,8 @@ abstract class BrokerAbstract
         EntityManager $em
     ) {
         $this->em = $em;
+        // $apiKey = $this->container->get('oro_config.global')->get('sweet_tooth_binding.api_key');
+        // SweetTooth::setApiKey($apiKey);
         SweetTooth::setApiKey('sk_DrRXkNMNnLW1Z4VhGstfw8V4');
         // Mage::helper('stcore')->initSweetToothLib();
     }
