@@ -1,0 +1,4 @@
+sweettooth.locale:
+    form:
+        tooltip:
+            api_key: "Enter the API Key from your <a href='http://manage.sweettoothrewards.com' target='_blank'>Sweet Tooth Account</a>. <br>Don't have an account? <a href='http://manage.sweettoothrewards.com' target='_blank'>Create one here</a>"

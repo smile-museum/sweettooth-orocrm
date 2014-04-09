@@ -1,0 +1,30 @@
+oro_system_configuration:
+    groups:
+        sweettooth_general:
+            icon:   icon-gear
+            title:  'General'
+        sweettooth_settings:
+            title:  'Sweet Tooth'
+        sweettooth_setup:
+            title:  'Sweet Tooth setup'
+    fields:
+        sweettooth.api_key:
+            type: text
+            options:
+                label: 'API Key'
+                tooltip: sweettooth.locale.form.tooltip.api_key
+                required: true
+                constraints:
+                    - NotBlank: ~
+                resettable: false
+    tree:
+        system_configuration:
+            platform:
+                children:
+                    sweettooth_setup:
+                        children:
+                            sweettooth_general:
+                                children:
+                                    sweettooth_settings:
+                                        children:
+                                            - sweettooth.api_key
