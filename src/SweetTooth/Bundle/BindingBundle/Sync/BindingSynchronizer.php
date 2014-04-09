@@ -6,9 +6,12 @@ namespace SweetTooth\Bundle\BindingBundle\Sync;
 use SweetTooth\Bundle\BindingBundle\Broker\ContactBroker as ContactBroker;
 use SweetTooth\Bundle\BindingBundle\Broker\MagentoOrderBroker as MagentoOrderBroker;
 
+use Symfony\Component\DependencyInjection\ContainerAware;
+
 use Doctrine\ORM\EntityManager;
 
-class BindingSynchronizer
+
+class BindingSynchronizer extends ContainerAware
 {
     protected $em;
 
@@ -37,7 +40,7 @@ class BindingSynchronizer
         // error_log("Id " . $localObject->getId());
 
         $this->syncContacts();
-        $this->syncMagentoOrders();
+        // $this->syncMagentoOrders();
     }
 
     protected function syncContacts()
@@ -47,9 +50,12 @@ class BindingSynchronizer
         );
 
         foreach ($bindings as $binding) {
-            $broker = new ContactBroker($this->em);
+            $broker = $this->container->get('sweettooth_binding.contact_broker');
+            // $broker = new ContactBroker($this->em);
+             
+            // $broker->test();
             $broker->doUpdate($binding->getLocalId());
-            error_log('Done sync: ' . $binding->getLocalId());
+            // error_log('Done sync: ' . $binding->getLocalId());
         }
     }
 

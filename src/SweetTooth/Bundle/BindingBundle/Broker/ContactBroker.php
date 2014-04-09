@@ -18,11 +18,13 @@ class ContactBroker extends BrokerAbstract
 {
     protected $_bindingModelKey = 'SweetToothBindingBundle:ContactBinding';
 
-    public function test($localId)
+    public function test()
     {
         // $localObject = $this->em->getRepository('SweetToothBindingBundle:ContactBinding')->findOneBy(array('local_id'=>$localId));
         
-        $binding = $this->doUpdate(2);
+        error_log('Testtt');
+
+        // $binding = $this->doUpdate(2);
         // $binding = $this->doCreate(7);
     }
 
