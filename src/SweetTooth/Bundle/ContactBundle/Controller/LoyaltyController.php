@@ -41,7 +41,6 @@ class LoyaltyController extends Controller
      */
     public function pointsHistoryAction(Request $request)
     {
-        error_log("pointsHistoryAction " . $request->query->get('contactId'));
         return array(
             'datagridParameters' => $request->query->all()
         );
