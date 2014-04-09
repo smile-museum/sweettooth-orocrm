@@ -5,6 +5,8 @@ namespace SweetTooth\Bundle\BindingBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
+use Oro\Bundle\ConfigBundle\DependencyInjection\SettingsBuilder;
+
 /**
  * This is the class that validates and merges configuration from your app/config files
  *
@@ -20,9 +22,12 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('sweet_tooth_binding');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        SettingsBuilder::append(
+            $rootNode,
+            [
+                'api_key'  => ['value' => '']
+            ]
+        );
 
         return $treeBuilder;
     }

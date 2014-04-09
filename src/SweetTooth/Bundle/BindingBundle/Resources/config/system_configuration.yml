@@ -8,7 +8,7 @@ oro_system_configuration:
         sweettooth_setup:
             title:  'Sweet Tooth setup'
     fields:
-        sweettooth.api_key:
+        sweet_tooth_binding.api_key:
             type: text
             options:
                 label: 'API Key'
@@ -27,4 +27,4 @@ oro_system_configuration:
                                 children:
                                     sweettooth_settings:
                                         children:
-                                            - sweettooth.api_key
+                                            - sweet_tooth_binding.api_key
