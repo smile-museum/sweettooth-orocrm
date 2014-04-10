@@ -1,6 +1,4 @@
 datagrid:
-
-    # TODO: Move to SweetToothContactBundle after creating SweetToothContactOverrideBundle
     widget-points-history-grid:
         source:
             type: points_history
