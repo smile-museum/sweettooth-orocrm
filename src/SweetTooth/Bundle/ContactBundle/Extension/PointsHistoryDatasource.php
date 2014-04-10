@@ -11,6 +11,7 @@ use Oro\Bundle\SearchBundle\Extension\Pager\IndexerQuery;
 
 use Doctrine\ORM\EntityManager;
 use SweetTooth\Bundle\BindingBundle\Broker\ContactBroker;
+use Symfony\Component\DependencyInjection\Container;
 
 use SweetTooth;
 use SweetTooth_PointsTransaction;
@@ -24,16 +25,38 @@ class PointsHistoryDatasource implements DatasourceInterface
      */
     protected $entityManager;
 
+    /**
+     * Service container
+     */
+    protected $container;
+
     protected $contactId;
 
-    /**
-     * @param Indexer $indexer
-     */
-    public function __construct(EntityManager $entityManager)
-    {
-        $this->entityManager = $entityManager;
+    protected $apiKey;
 
-        // TODO: Pass in customer broker service here, see SearchDatasource
+    // /**
+    //  * @param Indexer $indexer
+    //  */
+    // public function __construct(EntityManager $entityManager)
+    // {
+    //     $this->entityManager = $entityManager;
+
+    //     // TODO: Pass in customer broker service here, see SearchDatasource
+    // }
+
+    /**
+     * Constructor
+     */
+    public function __construct(
+        EntityManager $entityManager,
+        Container $container
+    ) {
+        $this->entityManager = $entityManager;
+        $this->container = $container;
+
+        $this->apiKey = $this->container->get('oro_config.global')->get('sweet_tooth_binding.api_key');
+
+        SweetTooth::setApiKey($this->apiKey);
     }
 
     /**
@@ -55,7 +78,8 @@ class PointsHistoryDatasource implements DatasourceInterface
             return [];
         }
 
-        $broker = new ContactBroker($this->entityManager);
+        // $broker = new ContactBroker($this->entityManager);
+        $broker = $this->container->get('sweettooth_binding.contact_broker');
         $binding = $broker->retrieve($this->getContactId(), false);
 
         // Return no results if customer has not been created in ST yet
@@ -63,7 +87,7 @@ class PointsHistoryDatasource implements DatasourceInterface
             return [];
         }
 
-        SweetTooth::setApiKey('sk_DrRXkNMNnLW1Z4VhGstfw8V4');
+        // SweetTooth::setApiKey('sk_DrRXkNMNnLW1Z4VhGstfw8V4');
         $pointsTransactions = SweetTooth_PointsTransaction::all(array(
           'customer_id' => $binding->getRemoteId()
         ));

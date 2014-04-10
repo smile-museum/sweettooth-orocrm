@@ -57,8 +57,6 @@ class PointsHistoryListener
         // $queryBuilder = $ormDataSource->getQueryBuilder();
         $parameters = $event->getParameters();
 
-        // $broker = new ContactBroker($this->entityManager);
-
         if (!empty($parameters['contactId'])) {
             $dataSource->setContactId($parameters['contactId']);
             // $binding = $broker->retrieve($parameters['contactId'], false);
