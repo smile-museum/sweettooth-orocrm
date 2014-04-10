@@ -18,6 +18,8 @@ services:
     # Listeners
     sweettooth_binding.contact.post_persist_listener:
         class: %sweettooth_binding.contact.post_persist_listener.class%
+        arguments:
+            - @service_container
         tags:
             - { name: doctrine.event_listener, event: postPersist }
             - { name: doctrine.event_listener, event: postUpdate }
@@ -28,6 +30,7 @@ services:
             - { name: doctrine.event_listener, event: postPersist }
             - { name: doctrine.event_listener, event: postUpdate }
 
+    # Brokers
     sweettooth_binding.contact_broker:
         class: SweetTooth\Bundle\BindingBundle\Broker\ContactBroker
         arguments:
