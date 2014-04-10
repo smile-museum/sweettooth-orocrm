@@ -27,7 +27,7 @@ class ContactPostPersist
 
     public function postUpdate(LifecycleEventArgs $args)
     {
-        /** @var $entity \OroCRM\Bundle\MagentoBundle\Entity\Customer */
+        /** @var $entity \OroCRM\Bundle\ContactBundle\Entity\Contact */
         $entity = $args->getEntity();
         $entityManager = $args->getEntityManager();
 
