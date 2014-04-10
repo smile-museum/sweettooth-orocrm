@@ -30,19 +30,15 @@ class PointsHistoryDatasource implements DatasourceInterface
      */
     protected $container;
 
+    /**
+     * Contact's id
+     */
     protected $contactId;
 
+    /**
+     * Sweet Tooth API Key
+     */
     protected $apiKey;
-
-    // /**
-    //  * @param Indexer $indexer
-    //  */
-    // public function __construct(EntityManager $entityManager)
-    // {
-    //     $this->entityManager = $entityManager;
-
-    //     // TODO: Pass in customer broker service here, see SearchDatasource
-    // }
 
     /**
      * Constructor
@@ -72,13 +68,11 @@ class PointsHistoryDatasource implements DatasourceInterface
      */
     public function getResults()
     {
-        error_log("CONTACT ID: " . $this->getContactId());
         // Return no results if customer filter not specified
         if (!$this->getContactId()) {
             return [];
         }
 
-        // $broker = new ContactBroker($this->entityManager);
         $broker = $this->container->get('sweettooth_binding.contact_broker');
         $binding = $broker->retrieve($this->getContactId(), false);
 
@@ -110,11 +104,20 @@ class PointsHistoryDatasource implements DatasourceInterface
         return $rows;
     }
 
+    /**
+     * This gets set by the grid listener so we can query Sweet Tooth
+     * for the appropriate contact points info
+     * @param int $contactId
+     */
     public function setContactId($contactId)
     {
         $this->contactId = $contactId;
     }
 
+    /**
+     * Returns the previously set contact id
+     * @return int contact id
+     */
     public function getContactId()
     {
         return $this->contactId;
