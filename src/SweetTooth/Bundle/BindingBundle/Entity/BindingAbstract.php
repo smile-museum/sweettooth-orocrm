@@ -3,6 +3,7 @@
 namespace SweetTooth\Bundle\BindingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use SweetTooth_Error;
 
 /**
  * ContactBinding
@@ -48,10 +49,10 @@ class BindingAbstract
      * @throws Exception $e
      * @param Exception $e
      */
-    public function addException(Exception $e)
+    public function addException($e)
     {
         // We only want to catch our own exceptions, rethrow otherwise
-        if (!($e instanceof SweetTooth_Error || $e instanceof ST_Core_Exception)) {
+        if (!($e instanceof SweetTooth_Error)) {
             throw $e;
         }
 

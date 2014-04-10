@@ -7,6 +7,7 @@ use SweetTooth\Bundle\BindingBundle\Broker\ContactBroker as ContactBroker;
 use SweetTooth\Bundle\BindingBundle\Broker\MagentoOrderBroker as MagentoOrderBroker;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 use Doctrine\ORM\EntityManager;
 
@@ -31,16 +32,45 @@ class BindingSynchronizer extends ContainerAware
      */
     public function sync()
     {
-        // $localObject = $this->em->getRepository('OroCRMMagentoBundle:Order')->find(2);
-        // $localObject->setGiftMessage("test");
-
-        // $this->em->persist($localObject);
-        // $this->em->flush();
-
-        // error_log("Id " . $localObject->getId());
+        // Make sure all the entities (Contacts, Magento Orders) that exist in
+        // the system before ST is installed have bindings to be synced on cron.
+        // TODO: Add this as a config option since some merchants may want to start
+        // their loyalty program from today onward 
+        $this->generateCustomerBindings();
+        $this->generateMagentoOrderBindings();
 
         $this->syncContacts();
         $this->syncMagentoOrders();
+    }
+
+    public function generateCustomerBindings()
+    {
+        $bindingTable = 'sweettooth_contact_binding';
+        $localObjectTable = 'orocrm_contact';
+
+        $query = "insert into {$bindingTable} (local_id)
+             select c.id from {$localObjectTable} as c left outer join {$bindingTable} as b on c.id = b.local_id 
+             where b.local_id IS NULL";
+
+        // TOOD: Check error here (also, is createNativeQuery better practice?)
+        $result = $this->em->getConnection()->query($query);
+
+        return $result;
+    }
+
+    public function generateMagentoOrderBindings()
+    {
+        $bindingTable = 'sweettooth_magento_order_binding';
+        $localObjectTable = 'orocrm_magento_order';
+
+        $query = "insert into {$bindingTable} (local_id)
+             select c.id from {$localObjectTable} as c left outer join {$bindingTable} as b on c.id = b.local_id 
+             where b.local_id IS NULL";
+
+        // TOOD: Check error here (also, is createNativeQuery better practice?)
+        $result = $this->em->getConnection()->query($query);
+
+        return $result;
     }
 
     protected function syncContacts()
