@@ -1,0 +1,40 @@
+{
+    "name": "sweettooth/sweettooth-orocrm",
+    "description": "Sweet Tooth for OroCRM",
+    "homepage": "https://github.com/sweettooth/sweettooth-orocrm.git",
+    "license": "OSL-3.0",
+    "authors": [
+        {
+            "name": "Sweet Tooth, Inc",
+            "homepage": "http://www.sweettoothrewards.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "SweetTooth\\Bundle": "src/"
+         }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packagist.orocrm.com"
+        },
+        {
+            "type": "composer",
+            "url": "https://packagist.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.4",
+        "oro/platform": "1.0.*",
+        "oro/crm": "1.0.*",
+        "sweettooth/sweettooth-php": "dev-master"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}

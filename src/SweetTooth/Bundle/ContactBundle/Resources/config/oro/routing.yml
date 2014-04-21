@@ -1,0 +1,4 @@
+sweettooth_contact_bundle:
+    resource:     "@SweetToothContactBundle/Controller"
+    type:         annotation
+    prefix:       /sweettooth_contact

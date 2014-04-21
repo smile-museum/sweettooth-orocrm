@@ -1,0 +1,28 @@
+datagrid:
+    widget-points-history-grid:
+        source:
+            type: points_history
+        columns:
+            description:
+                label: "Description"
+            points_change:
+                label: "Points"
+            created:
+                label: "Created"
+                frontend_type: datetime
+        sorters:
+            columns:
+                description:
+                    data_name: description
+                points_change:
+                    data_name: points_change
+                created:
+                    data_name: created
+            default:
+                created: DESC
+        properties:
+            id: ~
+            contactId: ~
+        options:
+            entityHint: points history
+
